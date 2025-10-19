@@ -90,7 +90,6 @@ import { useEffect, useState } from "react";
 // LeafletコンポーネントはSSRでエラーになるのでdynamic importする
 const Map = dynamic(() => import("./components/map"), { ssr: false });
 
-
 export default function Page() {
   const [initialCity, setInitialCity] = useState("");
   const [initialWeather, setInitialWeather] = useState("");
@@ -103,6 +102,8 @@ export default function Page() {
   const [weather, setWeather] = useState("");
   const [windSpeed, setWindSpeed] = useState("");
   const [windDeg, setWindDeg] = useState("");
+
+  const [message, SetMessage] = useState("");
 
   useEffect(() => {
     const tokyo = { lat: 35.6812, lng: 139.7671 };
@@ -155,6 +156,10 @@ export default function Page() {
     setWeather(data.weather.weather[0].description)
     setWindSpeed(data.weather.wind.speed);
     setWindDeg(data.weather.wind.deg);
+    
+    //出発地の風向を参考にする
+    let headwind = isHeadWind(initialPosition, pos, initialWindDeg)
+    SetMessage(headwind ? "向かい風です。" : "追い風です。");
   }
 
   async function getWeather(pos) {
@@ -162,20 +167,27 @@ export default function Page() {
       const res = await fetch(`/api/weather?lat=${pos.lat}&lon=${pos.lng}`);
       const data = await res.json();
       return data;
-      // setCity(data.weather.name)
-      // setWeather(data.weather.weather[0].description)
-      // setWindSpeed
-      // setWindDeg
-
     } catch (err) {
       console.error(err);
       setWeather("エラーが発生しました");
     }
   }
 
+  function isHeadWind(fromPos,toPos, windDeg){
+    // 緯度経度から進行方向の角度を計算（北=0°）
+    const deltaLat = toPos.lat - fromPos.lat;
+    const deltaLng = toPos.lng - fromPos.lng;
+    let heading = Math.atan2(deltaLat, deltaLng) * (180 / Math.PI);
+    if(heading < 0) heading += 360;
+
+    let angleDiff = Math.abs(heading - windDeg);
+    if (angleDiff > 180) angleDiff = 360 - angleDiff;
+    return angleDiff > 135;
+}
+
   return (
     <div className="text-center mt-8">
-      <h1 className="text-xl font-bold mb-4">目的地の天気を知ろう🌤️</h1>
+      <h1 className="text-xl font-bold mb-4">Cycring Assist</h1>
       <Map initialPosition={initialPosition}
            onDestinationSelect={handleDestinationSelect}
       />
@@ -193,6 +205,8 @@ export default function Page() {
           <p>天気: {weather}</p>
           <p>風速: {windSpeed} m/s</p>
           <p>風向: {windDeg}°</p>
+
+          <p><br />{message}</p>
         </div>
       )}
     </div>
