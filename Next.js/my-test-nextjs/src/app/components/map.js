@@ -70,7 +70,10 @@ export default function Map({ initialPosition, onDestinationSelect }) {
     return <p>地図を読み込み中...</p>;
   }
   return (
-    <MapContainer center={[initialPosition.lat, initialPosition.lng]} zoom={13} style={{ height: "400px" }}>
+    <MapContainer center={[initialPosition.lat, initialPosition.lng]} zoom={13} style={{
+                                                                                  height: "900px",
+                                                                                  marginLeft: "0",   
+                                                                                }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; OpenStreetMap contributors"

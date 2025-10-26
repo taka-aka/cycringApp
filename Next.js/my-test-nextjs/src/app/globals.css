@@ -28,6 +28,7 @@ body {
 @import "leaflet/dist/leaflet.css";
 
 .leaflet-container {
-  height: 400px;
-  width: 100%;
+  height: 100%;
+  width: 60%;
+  border-radius: 10px; /* 角を少し丸めたい場合 */
 }
