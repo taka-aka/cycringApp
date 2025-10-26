@@ -271,6 +271,7 @@ export default function Page() {
     if (!initialPosition) return;
     async function fetchInitialWeather() {
       const data = await getWeather(initialPosition);
+      console.log(data)
       setInitialCity(data.weather.name);
       setInitialWeather(data.weather.weather.description);
       setInitialWindSpeed(data.weather.wind.speed);
