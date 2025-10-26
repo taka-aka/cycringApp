@@ -138,7 +138,7 @@
 //       try {
 //         const data = await getWeather(initialPosition);
 //         setInitialCity(data.weather.name);
-//         setInitialWeather(data.weather.weather[0].description);
+//         setInitialWeather(data.weather.weather.description);
 //         setInitialWindSpeed(data.weather.wind.speed);
 //         setInitialWindDeg(data.weather.wind.deg);
 //       } catch (err) {
@@ -153,7 +153,7 @@
 //     setDestination(pos);
 //     const data = await getWeather(pos);
 //     setCity(data.weather.name);
-//     setWeather(data.weather.weather[0].description)
+//     setWeather(data.weather.weather.description)
 //     setWindSpeed(data.weather.wind.speed);
 //     setWindDeg(data.weather.wind.deg);
     
@@ -272,7 +272,7 @@ export default function Page() {
     async function fetchInitialWeather() {
       const data = await getWeather(initialPosition);
       setInitialCity(data.weather.name);
-      setInitialWeather(data.weather.weather[0].description);
+      setInitialWeather(data.weather.weather.description);
       setInitialWindSpeed(data.weather.wind.speed);
       setInitialWindDeg(data.weather.wind.deg);
     }
@@ -288,7 +288,7 @@ export default function Page() {
     setDestination(pos);
     const data = await getWeather(pos);
     setCity(data.weather.name);
-    setWeather(data.weather.weather[0].description);
+    setWeather(data.weather.weather.description);
     setWindSpeed(data.weather.wind.speed);
     setWindDeg(data.weather.wind.deg);
 
