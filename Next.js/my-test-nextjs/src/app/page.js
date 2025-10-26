@@ -288,6 +288,7 @@ export default function Page() {
   async function handleDestinationSelect(pos) {
     setDestination(pos);
     const data = await getWeather(pos);
+    console.log(data)
     setCity(data.weather.name);
     setWeather(data.weather.weather.description);
     setWindSpeed(data.weather.wind.speed);
