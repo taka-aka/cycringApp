@@ -29,6 +29,6 @@ body {
 
 .leaflet-container {
   height: 100%;
-  width: 60%;
+  width: 80%;
   border-radius: 10px; /* 角を少し丸めたい場合 */
 }
