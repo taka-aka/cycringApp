@@ -71,7 +71,7 @@ export default function Map({ initialPosition, onDestinationSelect }) {
   }
   return (
     <MapContainer center={[initialPosition.lat, initialPosition.lng]} zoom={13} style={{
-                                                                                  height: "900px",
+                                                                                  height: "600px",
                                                                                   marginLeft: "0",   
                                                                                 }}>
       <TileLayer
