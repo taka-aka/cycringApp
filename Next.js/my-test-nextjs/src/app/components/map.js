@@ -71,8 +71,7 @@ export default function Map({ initialPosition, onDestinationSelect }) {
   }
   return (
     <MapContainer center={[initialPosition.lat, initialPosition.lng]} zoom={13} style={{
-                                                                                  height: "600px",
-                                                                                  marginLeft: "0",   
+                                                                                  height: "600px"
                                                                                 }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
