@@ -1,10 +1,11 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { Button, Card, CardContent, Typography, Box } from "@mui/material";
+import { Button, Card, CardContent, Typography, Box, Toolbar, Container, AppBar, Grid } from "@mui/material";
 
 // Leafletマップ（SSR無効）
-const Map = dynamic(() => import("./components/map"), { ssr: false });
+// const Map = dynamic(() => import("./components/map"), { ssr: false });
+const Map = dynamic(() => import("./components/map-route"), { ssr: false });
 
 // 🌈 天気に応じた背景色を返す関数
 function getWeatherColor(weather) {
@@ -56,7 +57,6 @@ export default function Page() {
     if (!initialPosition) return;
     async function fetchInitialWeather() {
       const data = await getWeather(initialPosition);
-      console.log(data)
       setInitialCity(data.weather.name);
       setInitialWeather(data.weather.weather[0].description);
       setInitialWindSpeed(data.weather.wind.speed);
@@ -73,7 +73,6 @@ export default function Page() {
   async function handleDestinationSelect(pos) {
     setDestination(pos);
     const data = await getWeather(pos);
-    console.log(data)
     setCity(data.weather.name);
     setWeather(data.weather.weather[0].description);
     setWindSpeed(data.weather.wind.speed);
@@ -94,39 +93,113 @@ export default function Page() {
   }
 
   return (
-    <div className="text-center mt-8">
-      <Typography variant="h4" gutterBottom>
-        Cycling Assist 🚴‍♀️
-      </Typography>
+  //   <div className="text-center mt-8">
+  //     <Typography variant="h4" gutterBottom>
+  //       Cycling Assist 🚴‍♀️
+  //     </Typography>
 
+  //     {destination && (
+  //       <Box
+  //         sx={{
+  //           display: "flex",
+  //           allignItems: "flex-start",
+  //           gap: 2,
+  //           mt: 3,
+  //         }}        
+  //       >
+  //         <Box sx={{ flex: 1 }}> {/* 左側をいっぱいに */}
+  //           <Map initialPosition={initialPosition} onDestinationSelect={handleDestinationSelect} />
+  //         </Box>
+  //         <Box
+  //           sx={{
+  //             display: "flex",
+  //             flexDirection: "column", // 縦並び
+  //             alignItems: "flex-end",  // 右寄せ
+  //             gap: 2,
+  //             pr: 10,
+  //             width: 250, // カード幅固定
+  //           }}
+  //         >
+  //           <Card
+  //             sx={{
+  //               backgroundColor: getWeatherColor(initialWeather),
+  //               transition: "background-color 0.5s ease",
+  //             }}
+  //           >
+  //             <CardContent>
+  //               <Typography variant="h6">🌍 現在地</Typography>
+  //               <Typography>都市名: {initialCity}</Typography>
+  //               <Typography>天気: {initialWeather}</Typography>
+  //               <Typography>風速: {initialWindSpeed} m/s</Typography>
+  //               <Typography>風向: {initialWindDeg}°</Typography>
+  //             </CardContent>
+  //           </Card>
+
+  //           <Card
+  //             sx={{ 
+  //               backgroundColor: getWeatherColor(weather),
+  //               transition: "background-color 0.5s ease",
+  //             }}
+  //           >
+  //             <CardContent>
+  //               <Typography variant="h6">📍 目的地</Typography>
+  //               <Typography>都市名: {city}</Typography>
+  //               <Typography>天気: {weather}</Typography>
+  //               <Typography>風速: {windSpeed} m/s</Typography>
+  //               <Typography>風向: {windDeg}°</Typography>
+  //             </CardContent>
+  //           </Card>
+  //         </Box>
+  //       </Box>
+  //     )}
+
+  //     <Typography
+  //       sx={{
+  //         marginTop: 2,
+  //         fontWeight: "bold",
+  //         fontSize: "1.1rem",
+  //       }}
+  //     >
+  //       {message}
+  //     </Typography>
+
+  //     <Button
+  //       variant="contained"
+  //       color="primary"
+  //       onClick={() => location.reload()}
+  //       sx={{ mt: 3 }}
+  //     >
+  //       🔄 更新
+  //     </Button>
+  //   </div>
+
+
+    <>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h4">Cycling App</Typography>
+        </Toolbar>
+      </AppBar>
+
+
+      
       {destination && (
-        <Box
-          sx={{
-            display: "flex",
-            allignItems: "flex-start",
-            gap: 2,
-            mt: 3,
-          }}        
-        >
-          <Box sx={{ flex: 1 }}> {/* 左側をいっぱいに */}
+        <>
+          <Container sx={{ height: "500px", mt: 3, mb: 2 }}> 
             <Map initialPosition={initialPosition} onDestinationSelect={handleDestinationSelect} />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column", // 縦並び
-              alignItems: "flex-end",  // 右寄せ
-              gap: 2,
-              pr: 10,
-              width: 250, // カード幅固定
-            }}
-          >
-            <Card
+          </Container>
+
+          <Box sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "flex-start",
+                }}>
+            {/* <Card
               sx={{
                 backgroundColor: getWeatherColor(initialWeather),
                 transition: "background-color 0.5s ease",
-              }}
-            >
+                mr: 3
+              }}>
               <CardContent>
                 <Typography variant="h6">🌍 現在地</Typography>
                 <Typography>都市名: {initialCity}</Typography>
@@ -134,8 +207,8 @@ export default function Page() {
                 <Typography>風速: {initialWindSpeed} m/s</Typography>
                 <Typography>風向: {initialWindDeg}°</Typography>
               </CardContent>
-            </Card>
-
+            </Card> */}
+            
             <Card
               sx={{ 
                 backgroundColor: getWeatherColor(weather),
@@ -151,27 +224,34 @@ export default function Page() {
               </CardContent>
             </Card>
           </Box>
-        </Box>
+        </>
       )}
 
-      <Typography
-        sx={{
-          marginTop: 2,
-          fontWeight: "bold",
-          fontSize: "1.1rem",
-        }}
-      >
-        {message}
-      </Typography>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => location.reload()}
-        sx={{ mt: 3 }}
-      >
-        🔄 更新
-      </Button>
-    </div>
+      <Grid
+        sx={{ display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              mt: 2,
+            }}>
+        <Typography
+          sx={{ marginTop: 2,
+                fontWeight: "bold",
+                fontSize: "1.1rem",
+                justifyContent: "center",
+                mb: 2,
+              }}>
+          {message}
+        </Typography>
+      
+        <Button
+          width="auto"
+          variant="contained"
+          color="primary"
+          onClick={() => location.reload()}>
+          更新
+        </Button>
+      </Grid>
+    </>
   );
+
 }

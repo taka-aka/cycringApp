@@ -26,22 +26,47 @@ const pinIcon = L.icon({
   shadowSize: [45, 41],
 });
 
+// 🚗 経路描画用コンポーネント
+function RoutingMachine({ start, end }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!start || !end) return;
+
+    const routingControl = L.Routing.control({
+      waypoints: [L.latLng(start.lat, start.lng), L.latLng(end.lat, end.lng)],
+      router: L.Routing.mapbox(process.env.NEXT_PUBLIC_MAPBOX_TOKEN),
+      lineOptions: {
+        styles: [{ color: "#007bff", weight: 5 }],
+      },
+      addWaypoints: false, // 地図上で経由地を追加できなくする
+      draggableWaypoints: false,
+      fitSelectedRoutes: true,
+      showAlternatives: false,
+      createMarker: () => null, // ルート上に余計なマーカーを出さない
+    }).addTo(map);
+
+    return () => map.removeControl(routingControl);
+  }, [start, end, map]);
+
+  return null;
+}
+/////////////
 
 export default function Map({ initialPosition, onDestinationSelect }) {
-  const [position, setPosition] = useState(initialPosition);
-  // const [destination, setDestination] = useState(null);
+  // const [position, setPosition] = useState(initialPosition);
+  const [destination, setDestination] = useState(null);
 
   function LocationMarker() {
     useMapEvents({
       click(e) {
         const { lat, lng } = e.latlng;
-        // setPosition({ lat, lng });
-        setPosition({ lat, lng });
+        setDestination({ lat, lng });
         onDestinationSelect({ lat, lng }); // 親に座標渡す
       },
     });
-    return position ? <Marker position={position} icon={pinIcon}></Marker> : null;
-    // return destination ? <Marker position={[destination.lat, destination.lng]} icon={pinIcon} /> : null;
+    // return position ? <Marker position={position} icon={pinIcon}></Marker> : null;
+    return destination ? <Marker position={[destination.lat, destination.lng]} icon={pinIcon} /> : null;
   }
 
   if (!initialPosition.lat || !initialPosition.lng) {
@@ -55,6 +80,9 @@ export default function Map({ initialPosition, onDestinationSelect }) {
       />
       <Marker position={[initialPosition.lat, initialPosition.lng]} icon={initialPinIcon}></Marker>
       <LocationMarker />
+      {destination && (
+        <RoutingMachine start={initialPosition} end={destination} />
+      )}
     </MapContainer>
   );
 }
