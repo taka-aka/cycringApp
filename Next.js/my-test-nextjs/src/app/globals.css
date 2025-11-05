@@ -5,3 +5,44 @@
   width: 100%;
   border-radius: 10px; /* 角を少し丸めたい場合 */
 }
+
+/* 経路案内ボックス全体 */
+.leaflet-routing-container {
+  background-color: rgba(255, 255, 255, 0.85); /* 半透明にする */
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  font-size: 14px;
+  color: #222;
+  width: 240px !important; /* サイズ調整 */
+}
+
+/* タイトル部分（E49, E6など） */
+.leaflet-routing-alt h2 {
+  font-size: 16px;
+  color: #007bff;
+  margin-bottom: 6px;
+}
+
+/* 距離・時間部分 */
+.leaflet-routing-alt .leaflet-routing-summary {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+/* 各ステップ（Turn leftなど） */
+.leaflet-routing-instruction {
+  margin: 4px 0;
+  border-left: 3px solid #007bff;
+  padding-left: 6px;
+}
+
+/* src/styles/mapbox-directions.css */
+.mapboxgl-ctrl-directions {
+  background-color: white !important;
+  color: black !important;
+}
+.mapbox-directions-route-summary {
+  color: black !important;
+}
