@@ -104,7 +104,7 @@ export default function Page() {
       
       {destination && (
         <>
-          <Container sx={{ height: "500px", mt: 3, mb: 2 }}> 
+          <Container sx={{ height: "600px", mt: 3, mb: 2 }}> 
             <Map initialPosition={initialPosition} onDestinationSelect={handleDestinationSelect} />
           </Container>
 
@@ -112,6 +112,8 @@ export default function Page() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "flex-start",
+                gap: 3,       // 左右の間隔
+                mt: 2,
                 }}>
             
             <Card
@@ -128,23 +130,17 @@ export default function Page() {
                 <Typography>風向: {windDeg}°</Typography>
               </CardContent>
             </Card>
-          </Box>
-        </>
-      )}
 
-      <Grid
-        sx={{ display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              mt: 2,
-            }}>
-        <Typography
-          sx={{ marginTop: 2,
-                fontWeight: "bold",
-                fontSize: "1.1rem",
-                justifyContent: "center",
-                mb: 2,
-              }}>
+            <Grid sx={{ display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  mt: 0,
+                  }}>
+            <Typography sx={{
+                        fontWeight: "bold",
+                        fontSize: "1.1rem",
+                        mb: 2,
+                        }}>
           {message}
         </Typography>
       
@@ -156,7 +152,10 @@ export default function Page() {
           更新
         </Button>
       </Grid>
+      </Box>
     </>
-  );
+      )}  
+      </>
+);
 
 }

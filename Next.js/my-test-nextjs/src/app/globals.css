@@ -1,48 +1,29 @@
-@import "leaflet/dist/leaflet.css";
-
-.leaflet-container {
-  height: 100%;
-  width: 100%;
-  border-radius: 10px; /* 角を少し丸めたい場合 */
-}
-
-/* 経路案内ボックス全体 */
-.leaflet-routing-container {
-  background-color: rgba(255, 255, 255, 0.85); /* 半透明にする */
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  padding: 8px;
-  font-size: 14px;
-  color: #222;
-  width: 240px !important; /* サイズ調整 */
-}
-
-/* タイトル部分（E49, E6など） */
-.leaflet-routing-alt h2 {
-  font-size: 16px;
-  color: #007bff;
-  margin-bottom: 6px;
-}
-
-/* 距離・時間部分 */
-.leaflet-routing-alt .leaflet-routing-summary {
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-/* 各ステップ（Turn leftなど） */
-.leaflet-routing-instruction {
-  margin: 4px 0;
-  border-left: 3px solid #007bff;
-  padding-left: 6px;
-}
-
-/* src/styles/mapbox-directions.css */
+/* 外枠の幅を固定 */
 .mapboxgl-ctrl-directions {
-  background-color: white !important;
-  color: black !important;
+  width: 130px !important;
+  font-size: 0.8rem !important;
 }
-.mapbox-directions-route-summary {
-  color: black !important;
+
+/* 内部の入力フォームコンテナも合わせて狭める */
+.mapboxgl-ctrl-directions .mapboxgl-ctrl-directions-inputs {
+  width: 130px !important;
+}
+
+/* 出発地・目的地欄 */
+.mapboxgl-ctrl-directions .mapbox-directions-origin,
+.mapboxgl-ctrl-directions .mapbox-directions-destination {
+  width: 100% !important;
+}
+
+/* inputの幅は100%でOK（親要素130pxに合わせる） */
+.mapboxgl-ctrl-directions input {
+  width: 100% !important;
+  font-size: 0.8rem !important;
+}
+
+/* 経路案内（距離・指示）エリアも同じ幅に */
+.mapboxgl-ctrl-directions .mapboxgl-ctrl-directions-instructions,
+.mapboxgl-ctrl-directions .directions-control-instructions {
+  width: 130px !important;
+  font-size: 0.8rem !important;
 }
