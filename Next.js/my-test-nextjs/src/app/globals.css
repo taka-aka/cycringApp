@@ -1,29 +1,3 @@
-/* 外枠の幅を固定 */
-.mapboxgl-ctrl-directions {
-  width: 130px !important;
-  font-size: 0.8rem !important;
-}
-
-/* 内部の入力フォームコンテナも合わせて狭める */
-.mapboxgl-ctrl-directions .mapboxgl-ctrl-directions-inputs {
-  width: 130px !important;
-}
-
-/* 出発地・目的地欄 */
-.mapboxgl-ctrl-directions .mapbox-directions-origin,
-.mapboxgl-ctrl-directions .mapbox-directions-destination {
-  width: 100% !important;
-}
-
-/* inputの幅は100%でOK（親要素130pxに合わせる） */
-.mapboxgl-ctrl-directions input {
-  width: 100% !important;
-  font-size: 0.8rem !important;
-}
-
-/* 経路案内（距離・指示）エリアも同じ幅に */
-.mapboxgl-ctrl-directions .mapboxgl-ctrl-directions-instructions,
-.mapboxgl-ctrl-directions .directions-control-instructions {
-  width: 130px !important;
-  font-size: 0.8rem !important;
+.mapboxgl-ctrl-directions.hidden * {
+  display: none !important;
 }
